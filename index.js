@@ -1,7 +1,11 @@
-const query = 'Mountains';
+let query = "clowns";
+const loadData = (e) => {
+    if(e.target.innerText === "Load Images"){
+         query = 'Mountains';
+    }else if(e.target.innerText === "Load Secondary Images"){
+         query = 'cars';
 
-
-const loadData = () => {
+    }
     fetch(`https://api.pexels.com/v1/search?query=${query}`,{
   headers: {
     Authorization: "563492ad6f917000010000015080b999c314478fa318b5c998a262de"
@@ -37,8 +41,10 @@ const postImages = function (data) {
 
 
 window.onload = () => {
-    const loadBtn = document.querySelector("#loadImgButton");
-    loadBtn.addEventListener("click", loadData)
+    //const loadBtn = document.querySelector("#loadImgButton");
+    //loadBtn.addEventListener("click", loadData)
+    const loadButtons = document.querySelectorAll(".loadImgButton");
+    for(btn of loadButtons){btn.addEventListener("click", loadData)};
 }
 
 
