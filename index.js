@@ -1,4 +1,8 @@
 let query = "clowns";
+const body = document.querySelector("body");
+const header = document.querySelector("header");
+
+
 const loadData = (e) => {
     if(e.target.innerText === "Load Images"){
          query = 'Mountains';
@@ -29,6 +33,19 @@ const loadData = (e) => {
     
     
 }
+const createAlert = (loadedPics, cards) => {
+    const alertContainer = document.createElement("div");
+    alertContainer.setAttribute("class", "container d-flex justify-content-center");
+    const alertBody = document.createElement("div");
+    alertBody.setAttribute("class", "alert alert-secondary alertBar");
+    alertBody.setAttribute("role", "alert");
+    header.after(alertContainer);
+    alertContainer.append(alertBody);
+    alertBody.innerText = `Loaded ${loadedPics} images. Showing ${cards} images.`;
+    setTimeout(function () {alertContainer.remove()}, 5000)
+
+}
+
 
 const postImages = (data) => {    
     const images = document.querySelectorAll(".card-img-top");
@@ -49,6 +66,7 @@ const postImages = (data) => {
         
 
     }
+    createAlert(data.photos.length,cards.length);
 }
 
 const hideCard = (e) => {
