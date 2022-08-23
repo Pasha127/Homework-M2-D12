@@ -22,7 +22,7 @@ const loadData = (e) => {
      return resp.json()
    })
    .then(data => {
-    //console.log(data); 
+    console.log(data); 
     postImages(data)
    })
 
@@ -41,8 +41,10 @@ const postImages = (data) => {
         newImg.setAttribute("class", "card-img-top ")
         cards[i].prepend(newImg);
         const smallTxt = cards[i].querySelector("small.text-muted");
+        const cardTxt = cards[i].querySelector("p.card-text");
         //console.log(data)
         smallTxt.innerText = data.photos[i].id;
+        cardTxt.innerText = data.photos[i].alt;
         newImg.setAttribute("src", data.photos[i].src.medium );
         
 
