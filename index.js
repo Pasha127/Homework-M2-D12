@@ -1,7 +1,9 @@
 let query = "clowns";
 const body = document.querySelector("body");
 const header = document.querySelector("header");
-
+const slides = document.querySelectorAll("img.d-block.w-100.carousel-slide");
+const viewButtons = document.querySelectorAll(".viewButton");
+const modal = document.querySelector("#modal");
 
 const loadData = (e) => {
     if(e.target.innerText === "Load Images"){
@@ -37,7 +39,7 @@ const createAlert = (loadedPics, cards) => {
     const alertContainer = document.createElement("div");
     alertContainer.setAttribute("class", "container d-flex justify-content-center");
     const alertBody = document.createElement("div");
-    alertBody.setAttribute("class", "alert alert-secondary alertBar");
+    alertBody.setAttribute("class", "alert alert-success alertBar");
     alertBody.setAttribute("role", "alert");
     header.after(alertContainer);
     alertContainer.append(alertBody);
@@ -73,6 +75,40 @@ const hideCard = (e) => {
     e.target.closest(".card").remove();
 }
 
+const callForest = () => {
+    fetch(`https://api.pexels.com/v1/search?query=woods`,{
+  headers: {
+    Authorization: "563492ad6f917000010000015080b999c314478fa318b5c998a262de"
+  }
+})
+   .then(resp => {
+     return resp.json()
+   })
+   .then(data => {
+    console.log(data); 
+    populateCarousel(data)
+   })
+
+}
+const populateCarousel = (data) => {
+    for(let i=0; i<slides.length; i++){
+     slides[i].setAttribute("src", `${data.photos[i].src.large2x}`);
+    }
+
+}
+
+const expandPic = (e) => {
+    const card = e.target.closest(".card");
+    const pic = card.querySelector("img.card-img-top");
+    const text = card.querySelector(".card-text").innerText;
+    modal.querySelector("#modalLabel").innerText = text;
+    modal.querySelector(".modal-body img").setAttribute("src", pic.getAttribute("src"));
+
+
+    
+
+}
+
 window.onload = () => {
     //const loadBtn = document.querySelector("#loadImgButton");
     //loadBtn.addEventListener("click", loadData)
@@ -81,27 +117,10 @@ window.onload = () => {
 
     const hideBtns = document.querySelectorAll(".hiderBtn");
     for(btn of hideBtns){btn.addEventListener("click", hideCard)};
+    callForest();
+
+    for(btn of viewButtons){btn.addEventListener("click", expandPic)}
 }
 
 
 
-
-
-/* const makeProfile = function (p) {
-    console.log(p)
-    
-    const oldCard = document.querySelector(".card");
-    if(oldCard){
-        oldCard.remove();
-    }
-    const newCard = document.createElement("div");
-    newCard.innerHTML = `<div class="card col-md-3" style="width: 18rem;">
-    <img src="${p.results[0].picture.large}" class="card-img-top" alt="profile pic">
-    <div class="card-body">
-      <h5 class="card-title">${p.results[0].name.first + " " + p.results[0].name.last}</h5>      
-    </div>
-  </div>`;
-
-  document.querySelector(".row").append(newCard);
-}
- */
