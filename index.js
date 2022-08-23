@@ -23,7 +23,7 @@ const loadData = (e) => {
     
 }
 
-const postImages = function (data) {    
+const postImages = (data) => {    
     const images = document.querySelectorAll(".card-img-top");
     for(rect of images){
         rect.remove();
@@ -39,12 +39,18 @@ const postImages = function (data) {
     }
 }
 
+const hideCard = (e) => {
+    e.target.closest(".card").remove();
+}
 
 window.onload = () => {
     //const loadBtn = document.querySelector("#loadImgButton");
     //loadBtn.addEventListener("click", loadData)
     const loadButtons = document.querySelectorAll(".loadImgButton");
     for(btn of loadButtons){btn.addEventListener("click", loadData)};
+
+    const hideBtns = document.querySelectorAll(".hiderBtn");
+    for(btn of hideBtns){btn.addEventListener("click", hideCard)};
 }
 
 
