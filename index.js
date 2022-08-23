@@ -5,7 +5,14 @@ const loadData = (e) => {
     }else if(e.target.innerText === "Load Secondary Images"){
          query = 'cars';
 
+    }else if(e.target.innerText === 'Search'){
+        const searchQuery = document.querySelector(".searchBar").value;
+        if(searchQuery){ query = searchQuery};
+        query = searchQuery;
+    }else{
+        query = "question mark";
     }
+    console.log(query);
     fetch(`https://api.pexels.com/v1/search?query=${query}`,{
   headers: {
     Authorization: "563492ad6f917000010000015080b999c314478fa318b5c998a262de"
@@ -33,8 +40,11 @@ const postImages = (data) => {
         const newImg = document.createElement("img");
         newImg.setAttribute("class", "card-img-top ")
         cards[i].prepend(newImg);
-        newImg.setAttribute("src", data.photos[i].src.medium )
-        //newImg.classList.add("imageSettings");
+        const smallTxt = cards[i].querySelector("small.text-muted");
+        //console.log(data)
+        smallTxt.innerText = data.photos[i].id;
+        newImg.setAttribute("src", data.photos[i].src.medium );
+        
 
     }
 }
